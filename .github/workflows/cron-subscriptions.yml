@@ -1,0 +1,15 @@
+name: Cron - Subscriptions
+
+on:
+  schedule:
+    - cron: "30 4 * * *"
+    - cron: "*/30 5-12 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call subscriptions refresh endpoint
+        run: |
+          curl -sf -X POST "${{ secrets.BACKEND_URL }}/api/cron/subscriptions?token=${{ secrets.CRON_SECRET }}"
