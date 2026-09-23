@@ -10,7 +10,8 @@ const app = express();
 
 app.use(
   cors({
-    origin:  "*",
+    origin:"*",
+    
   })
 );
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(async (req, res, next) => {
   try {
     await connectDB();
+    console.log("db connected ✅")
     next();
   } catch (err) {
     res.status(503).json({ error: "Database unavailable", detail: err.message });
