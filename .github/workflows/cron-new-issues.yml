@@ -1,0 +1,15 @@
+name: Cron - New & Upcoming Issues
+
+# DR-5: twice daily, 08:00 and 20:00 IST = 02:30 and 14:30 UTC.
+on:
+  schedule:
+    - cron: "30 2,14 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call new-issues refresh endpoint
+        run: |
+          curl -sf -X POST "${{ secrets.BACKEND_URL }}/api/cron/new-issues?token=${{ secrets.CRON_SECRET }}"

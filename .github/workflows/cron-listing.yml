@@ -1,0 +1,15 @@
+name: Cron - Listing Price & Gain
+
+# DR-5: once daily, 18:00 IST = 12:30 UTC, issues listing that day.
+on:
+  schedule:
+    - cron: "30 12 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call listing refresh endpoint
+        run: |
+          curl -sf -X POST "${{ secrets.BACKEND_URL }}/api/cron/listing?token=${{ secrets.CRON_SECRET }}"
